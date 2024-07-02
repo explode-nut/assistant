@@ -1,11 +1,15 @@
 package com.czn.assistant.spider;
 
+import com.czn.assistant.common.enums.ResponseCodeEnum;
+import com.czn.assistant.exception.LegendsListInvalidException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class LegendsListSpider implements BaseSpider{
+@Transactional(rollbackFor = Exception.class)
+public class LegendsListSpider implements BaseSpider {
     @Override
     public void doSpider() {
-        System.out.println("成功");
+        throw new LegendsListInvalidException(ResponseCodeEnum.Legends_List_invalid_ERROR);
     }
 }
