@@ -1,6 +1,11 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/assistant?serverTimezone=GMT%2B8&useSSL=true&characterEncoding=utf-8
-    username: root
-    password: abc123
+  profiles:
+    active: dev
+
+logging:
+  config: classpath:logback-assistant.xml
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/**/*.xml

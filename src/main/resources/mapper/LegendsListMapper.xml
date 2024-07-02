@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czn.assistant.dao.mapper.LegendsListMapper">
+    <insert id="insert">
+        INSERT INTO legends_list (chinese_name, name)
+        VALUES (#{chineseName}, #{name})
+    </insert>
+    <insert id="insertList" parameterType="java.util.ArrayList">
+        INSERT INTO legends_list (chinese_name, name)
+        VALUES
+        <foreach collection="list" item="legend" index="index" separator=",">
+            (#{legend.chineseName}, #{legend.name})
+        </foreach>
+    </insert>
+
+</mapper>

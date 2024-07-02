@@ -2,10 +2,8 @@ package com.czn.assistant.util;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
-public class Response<T> implements Serializable {
+public class Response<T> {
 
     // 是否成功，默认为 true
     private boolean success = true;
