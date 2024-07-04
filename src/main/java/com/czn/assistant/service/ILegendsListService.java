@@ -1,8 +1,13 @@
 package com.czn.assistant.service;
 
+import com.czn.assistant.dto.response.LegendsListDTO;
 import com.czn.assistant.dto.response.LegendsListsDTO;
+
+import java.util.List;
 
 public interface ILegendsListService {
 
-    LegendsListsDTO getLegendsList();
+    List<LegendsListDTO> getLegendsList();
+
+    LegendsListDTO getLegend(String name);
 }
