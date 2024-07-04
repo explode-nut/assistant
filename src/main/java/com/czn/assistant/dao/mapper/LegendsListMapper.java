@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 @Mapper
 public interface LegendsListMapper {
-    void insert(LegendsList legend);
+    void insert(@Param("legend") LegendsList legend);
 
     void insertList(@Param("list") ArrayList<LegendsList> list);
+
+    LegendsList get(@Param("name") String name);
+
+    ArrayList<LegendsList> getAll();
 }

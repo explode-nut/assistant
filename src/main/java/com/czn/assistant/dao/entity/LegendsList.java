@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class LegendsList implements Serializable {
-    Long id;
+    Integer id;
     String chineseName;
     String name;
 }

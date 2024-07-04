@@ -4,7 +4,7 @@
 <mapper namespace="com.czn.assistant.dao.mapper.LegendsListMapper">
     <insert id="insert">
         INSERT INTO legends_list (chinese_name, name)
-        VALUES (#{chineseName}, #{name})
+        VALUES (#{legend.chineseName}, #{legend.name})
     </insert>
     <insert id="insertList" parameterType="java.util.ArrayList">
         INSERT INTO legends_list (chinese_name, name)
@@ -13,5 +13,12 @@
             (#{legend.chineseName}, #{legend.name})
         </foreach>
     </insert>
+
+    <select id="get" resultType="com.czn.assistant.dao.entity.LegendsList">
+        SELECT * FROM legends_list WHERE name = #{name}
+    </select>
+    <select id="getAll" resultType="com.czn.assistant.dao.entity.LegendsList">
+        SELECT * FROM legends_list
+    </select>
 
 </mapper>

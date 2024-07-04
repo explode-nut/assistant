@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class LegendsAvatar {
-    Long id;
+    Integer id;
     String legendsName;
     String url;
 }
