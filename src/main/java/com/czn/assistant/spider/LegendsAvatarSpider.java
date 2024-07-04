@@ -1,9 +1,9 @@
 package com.czn.assistant.spider;
 
 import com.czn.assistant.common.enums.ResponseCodeEnum;
-import com.czn.assistant.dao.entity.LegendsList;
-import com.czn.assistant.dao.mapper.LegendsListMapper;
-import com.czn.assistant.exception.LegendsListInvalidException;
+import com.czn.assistant.dao.entity.LegendsAvatar;
+import com.czn.assistant.dao.mapper.LegendsAvatarMapper;
+import com.czn.assistant.exception.LegendsAvatarInvalidException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,30 +17,30 @@ import java.util.ArrayList;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class LegendsListSpider implements BaseSpider {
+public class LegendsAvatarSpider implements BaseSpider{
 
-    LegendsListMapper legendsListMapper;
+    LegendsAvatarMapper legendsAvatarMapper;
 
     @Autowired
-    public LegendsListSpider(LegendsListMapper legendsListMapper) {
-        this.legendsListMapper = legendsListMapper;
+    public LegendsAvatarSpider(LegendsAvatarMapper legendsAvatarMapper) {
+        this.legendsAvatarMapper = legendsAvatarMapper;
     }
 
     @Override
     public void doSpider() {
-        ArrayList<LegendsList> list = new ArrayList<>();
+        ArrayList<LegendsAvatar> list = new ArrayList<>();
         try {
             Document document = Jsoup.connect("https://www.op.gg/champions").get();
             Elements elements = document.selectXpath("//*[@id=\"content-container\"]/div[2]/aside/nav/ul/li");
             for (Element e : elements) {
-                LegendsList legend = new LegendsList();
-                legend.setName(e.text());
-                legend.setChineseName("暂无");
-                list.add(legend);
+                LegendsAvatar legendsAvatar = new LegendsAvatar();
+                legendsAvatar.setLegendsName(e.text());
+                legendsAvatar.setUrl(e.select("img").attr("src"));
+                list.add(legendsAvatar);
             }
-            legendsListMapper.insertList(list);
+            legendsAvatarMapper.insertList(list);
         } catch (IOException e) {
-            throw new LegendsListInvalidException(ResponseCodeEnum.Legends_List_INVALID_ERROR);
+            throw new LegendsAvatarInvalidException(ResponseCodeEnum.Legends_Avatar_INVALID_ERROR);
         }
     }
 }

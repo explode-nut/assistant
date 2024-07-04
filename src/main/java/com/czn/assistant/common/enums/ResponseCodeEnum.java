@@ -11,7 +11,8 @@ public enum ResponseCodeEnum  implements BaseExceptionInterface {
     SYSTEM_ERROR("500", "出错啦，后台小哥正在努力修复中..."),
 
     // ----------- 业务异常状态码 -----------
-    Legends_List_invalid_ERROR("403", "英雄列表出错！"),
+    Legends_List_INVALID_ERROR("403", "获取英雄列表出错！"),
+    Legends_Avatar_INVALID_ERROR("403", "获取英雄头像出错！"),
     ;
 
     // 异常码
