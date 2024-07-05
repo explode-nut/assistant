@@ -30,4 +30,16 @@ public class LegendsListMapperTests {
         ArrayList<LegendsList> all = legendsListMapper.getAll();
         System.out.println(all);
     }
+
+    @Test
+    void testUpdate() {
+        LegendsList expected = new LegendsList();
+        expected.setId(1);
+        expected.setChineseName("暗裔剑魔");
+        expected.setName("Aatrox");
+        legendsListMapper.update(expected);
+        LegendsList legendsList = legendsListMapper.get("Aatrox");
+        Assertions.assertEquals(expected, legendsList);
+        System.out.println(legendsList);
+    }
 }

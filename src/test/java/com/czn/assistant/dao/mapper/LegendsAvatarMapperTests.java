@@ -29,4 +29,16 @@ public class LegendsAvatarMapperTests {
         ArrayList<LegendsAvatar> all = legendsAvatarMapper.getAll();
         System.out.println(all);
     }
+
+    @Test
+    void testupdate() {
+        LegendsAvatar expected = new LegendsAvatar();
+        expected.setId(1);
+        expected.setLegendsName("Aatrox");
+        expected.setUrl("123");
+        legendsAvatarMapper.update(expected);
+        LegendsAvatar legendsAvatar = legendsAvatarMapper.get("Aatrox");
+        Assertions.assertEquals(expected, legendsAvatar);
+        System.out.println(legendsAvatar);
+    }
 }

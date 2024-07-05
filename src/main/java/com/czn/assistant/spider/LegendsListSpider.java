@@ -1,5 +1,6 @@
 package com.czn.assistant.spider;
 
+import com.czn.assistant.common.constant.OPGGSpiderConstant;
 import com.czn.assistant.common.enums.ResponseCodeEnum;
 import com.czn.assistant.dao.entity.LegendsList;
 import com.czn.assistant.dao.mapper.LegendsListMapper;
@@ -30,7 +31,7 @@ public class LegendsListSpider implements BaseSpider {
     public void doSpider() {
         ArrayList<LegendsList> list = new ArrayList<>();
         try {
-            Document document = Jsoup.connect("https://www.op.gg/champions").get();
+            Document document = Jsoup.connect(OPGGSpiderConstant.OPGG_INDEX_PAGE_URL_CONSTANT).get();
             Elements elements = document.selectXpath("//*[@id=\"content-container\"]/div[2]/aside/nav/ul/li");
             for (Element e : elements) {
                 LegendsList legend = new LegendsList();

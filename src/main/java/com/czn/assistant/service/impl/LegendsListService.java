@@ -6,9 +6,9 @@ import com.czn.assistant.dao.entity.LegendsList;
 import com.czn.assistant.dao.mapper.LegendsAvatarMapper;
 import com.czn.assistant.dao.mapper.LegendsListMapper;
 import com.czn.assistant.dto.response.LegendsListDTO;
-import com.czn.assistant.dto.response.LegendsListsDTO;
 import com.czn.assistant.exception.LegendsListInvalidException;
 import com.czn.assistant.service.ILegendsListService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +61,18 @@ public class LegendsListService implements ILegendsListService {
         result.setAvatarUrl(avatar.getUrl());
 
         return result;
+    }
+
+    @Override
+    public void updateLegend(LegendsListDTO legendsListDTO) {
+        LegendsList legendsList = new LegendsList();
+        LegendsAvatar legendsAvatar = new LegendsAvatar();
+        BeanUtils.copyProperties(legendsListDTO, legendsList);
+        legendsAvatar.setId(legendsListDTO.getId());
+        legendsAvatar.setLegendsName(legendsListDTO.getName());
+        legendsAvatar.setUrl(legendsListDTO.getAvatarUrl());
+
+        legendsListMapper.update(legendsList);
+        legendsAvatarMapper.update(legendsAvatar);
     }
 }

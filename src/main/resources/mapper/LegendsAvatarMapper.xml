@@ -15,6 +15,11 @@
             (#{avatar.legendsName}, #{avatar.url})
         </foreach>
     </insert>
+    <update id="update">
+        UPDATE legends_avatar
+        SET url = #{avatar.url}
+        WHERE legends_name = #{avatar.legendsName}
+    </update>
 
     <select id="get" resultType="com.czn.assistant.dao.entity.LegendsAvatar">
         SELECT * FROM legends_avatar WHERE legends_name = #{name}

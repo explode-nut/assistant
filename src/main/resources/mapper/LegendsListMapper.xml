@@ -14,6 +14,12 @@
         </foreach>
     </insert>
 
+    <update id="update">
+        UPDATE legends_list
+        SET chinese_name = #{legend.chineseName}
+        WHERE name = #{legend.name}
+    </update>
+
     <select id="get" resultType="com.czn.assistant.dao.entity.LegendsList">
         SELECT * FROM legends_list WHERE name = #{name}
     </select>

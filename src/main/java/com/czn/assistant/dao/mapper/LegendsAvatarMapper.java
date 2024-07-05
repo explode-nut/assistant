@@ -15,4 +15,6 @@ public interface LegendsAvatarMapper {
     LegendsAvatar get(@Param("name") String name);
 
     ArrayList<LegendsAvatar> getAll();
+
+    void update(@Param("avatar") LegendsAvatar legendsAvatar);
 }

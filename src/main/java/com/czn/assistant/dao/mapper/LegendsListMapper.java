@@ -15,4 +15,6 @@ public interface LegendsListMapper {
     LegendsList get(@Param("name") String name);
 
     ArrayList<LegendsList> getAll();
+
+    void update(@Param("legend") LegendsList legendsList);
 }
