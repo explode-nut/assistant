@@ -29,7 +29,7 @@ public class LegendsListSpider implements BaseSpider {
     }
 
     @Override
-    public List doSpider() {
+    public List<LegendsList> doSpider() {
         ArrayList<LegendsList> list = new ArrayList<>();
         try {
             Document document = Jsoup.connect(OPGGSpiderConstant.OPGG_INDEX_PAGE_URL_CONSTANT).get();

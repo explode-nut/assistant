@@ -8,24 +8,35 @@ import com.czn.assistant.dao.mapper.LegendsListMapper;
 import com.czn.assistant.dto.response.LegendsListDTO;
 import com.czn.assistant.exception.LegendsListInvalidException;
 import com.czn.assistant.service.ILegendsListService;
+import com.czn.assistant.spider.LegendsAvatarSpider;
+import com.czn.assistant.spider.LegendsListSpider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class LegendsListService implements ILegendsListService {
 
     LegendsListMapper legendsListMapper;
     LegendsAvatarMapper legendsAvatarMapper;
+    LegendsListSpider legendsListSpider;
+    LegendsAvatarSpider legendsAvatarSpider;
 
     @Autowired
-    public LegendsListService(LegendsListMapper legendsListMapper, LegendsAvatarMapper legendsAvatarMapper) {
+    public LegendsListService(LegendsListMapper legendsListMapper, LegendsAvatarMapper legendsAvatarMapper, LegendsListSpider legendsListSpider, LegendsAvatarSpider legendsAvatarSpider) {
         this.legendsListMapper = legendsListMapper;
         this.legendsAvatarMapper = legendsAvatarMapper;
+        this.legendsListSpider = legendsListSpider;
+        this.legendsAvatarSpider = legendsAvatarSpider;
     }
 
     @Override
@@ -77,4 +88,41 @@ public class LegendsListService implements ILegendsListService {
         legendsListMapper.update(legendsList);
         legendsAvatarMapper.update(legendsAvatar);
     }
+
+    @Override
+    @Transactional
+    //刷新英雄列表，插入新英雄，每天执行一次这个方法
+    //TODO 设置定时任务每天执行一次
+    public void refreshList() {
+        List<LegendsListDTO> legendsList = getLegendsList();
+        List<LegendsList> legendsList1 = legendsListSpider.doSpider();
+        List<LegendsAvatar> avatarList = legendsAvatarSpider.doSpider();
+        Set<String> collect = legendsList.stream().map(LegendsListDTO::getName).collect(Collectors.toSet());
+        //新爬取的列表中不包含的英雄名
+        String name = "新英雄";
+        if (legendsList1.size() != avatarList.size()) {
+            throw new LegendsListInvalidException(ResponseCodeEnum.Legends_List_INVALID_ERROR);
+        } else {
+            for (LegendsList list : legendsList1) {
+                name = list.getName();
+                if (!collect.contains(name)) {
+                    //插入新英雄
+                    LegendsList legend = new LegendsList();
+                    legend.setName(name);
+                    legend.setChineseName("暂无");
+                    LegendsAvatar avatar = new LegendsAvatar();
+                    avatar.setLegendsName(name);
+                    for (LegendsAvatar e : avatarList) {
+                        if (name.equals(e.getLegendsName())) {
+                            avatar.setUrl(e.getUrl());
+                        }
+                    }
+                    legendsListMapper.insert(legend);
+                    legendsAvatarMapper.insert(avatar);
+                    log.info("新插入一个英雄");
+                }
+            }
+        }
+    }
+
 }

@@ -25,7 +25,7 @@ public class LegendsListSpiderTests {
 
     @Test
     void testStoreResult() {
-        List list = legendsListSpider.doSpider();
+        List<LegendsList> list = legendsListSpider.doSpider();
         legendsListSpider.storeResult(list);
         ArrayList<LegendsList> all = legendsListMapper.getAll();
         System.out.println(all);

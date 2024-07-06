@@ -26,7 +26,7 @@ public class LegendsAvatarSpiderTests {
 
     @Test
     void testStoreResult() {
-        List list = legendsAvatarSpider.doSpider();
+        List<LegendsAvatar> list = legendsAvatarSpider.doSpider();
         legendsAvatarSpider.storeResult(list);
         ArrayList<LegendsAvatar> all = legendsAvatarMapper.getAll();
         System.out.println(all);

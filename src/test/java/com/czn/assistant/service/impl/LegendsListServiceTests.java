@@ -40,4 +40,9 @@ public class LegendsListServiceTests {
         Assertions.assertEquals(aatrox, actual);
         System.out.println(actual);
     }
+
+    @Test
+    void testRefreshList() {
+        legendsListService.refreshList();
+    }
 }

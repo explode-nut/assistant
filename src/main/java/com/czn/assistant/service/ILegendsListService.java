@@ -11,4 +11,6 @@ public interface ILegendsListService {
     LegendsListDTO getLegend(String name);
 
     void updateLegend(LegendsListDTO legendsListDTO);
+
+    void refreshList();
 }

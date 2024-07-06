@@ -44,4 +44,12 @@ public class LegendsListController {
 
         return Response.success();
     }
+
+    @PutMapping("/refresh")
+    public Response refresh() {
+        legendsListService.refreshList();
+        log.info("刷新英雄列表");
+
+        return Response.success();
+    }
 }
