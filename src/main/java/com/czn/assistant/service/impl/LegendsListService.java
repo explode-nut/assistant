@@ -11,6 +11,7 @@ import com.czn.assistant.service.ILegendsListService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,7 @@ public class LegendsListService implements ILegendsListService {
     }
 
     @Override
+    @Transactional
     public void updateLegend(LegendsListDTO legendsListDTO) {
         LegendsList legendsList = new LegendsList();
         LegendsAvatar legendsAvatar = new LegendsAvatar();

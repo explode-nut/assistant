@@ -5,12 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Mapper
 public interface LegendsListMapper {
     void insert(@Param("legend") LegendsList legend);
 
-    void insertList(@Param("list") ArrayList<LegendsList> list);
+    void insertList(@Param("list") List<LegendsList> list);
 
     LegendsList get(@Param("name") String name);
 

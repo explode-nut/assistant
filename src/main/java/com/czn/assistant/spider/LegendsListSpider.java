@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
@@ -28,7 +29,7 @@ public class LegendsListSpider implements BaseSpider {
     }
 
     @Override
-    public void doSpider() {
+    public List doSpider() {
         ArrayList<LegendsList> list = new ArrayList<>();
         try {
             Document document = Jsoup.connect(OPGGSpiderConstant.OPGG_INDEX_PAGE_URL_CONSTANT).get();
@@ -39,9 +40,14 @@ public class LegendsListSpider implements BaseSpider {
                 legend.setChineseName("暂无");
                 list.add(legend);
             }
-            legendsListMapper.insertList(list);
+            return list;
         } catch (IOException e) {
             throw new LegendsListInvalidException(ResponseCodeEnum.Legends_List_INVALID_ERROR);
         }
+    }
+
+    @Override
+    public void storeResult(List list) {
+        legendsListMapper.insertList(list);
     }
 }

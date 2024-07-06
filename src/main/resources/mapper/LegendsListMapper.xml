@@ -6,7 +6,7 @@
         INSERT INTO legends_list (chinese_name, name)
         VALUES (#{legend.chineseName}, #{legend.name})
     </insert>
-    <insert id="insertList" parameterType="java.util.ArrayList">
+    <insert id="insertList" parameterType="java.util.List">
         INSERT INTO legends_list (chinese_name, name)
         VALUES
         <foreach collection="list" item="legend" index="index" separator=",">

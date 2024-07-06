@@ -30,4 +30,14 @@ public class LegendsListServiceTests {
         Assertions.assertEquals(expected, aatrox);
         System.out.println(aatrox);
     }
+
+    @Test
+    void testUpdateLegend() {
+        LegendsListDTO aatrox = legendsListService.getLegend("Aatrox");
+        aatrox.setChineseName("暗裔剑魔");
+        legendsListService.updateLegend(aatrox);
+        LegendsListDTO actual = legendsListService.getLegend("Aatrox");
+        Assertions.assertEquals(aatrox, actual);
+        System.out.println(actual);
+    }
 }
