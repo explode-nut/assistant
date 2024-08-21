@@ -1,7 +1,8 @@
-package com.czn.assistant.controller.admin;
+package com.czn.assistant.controller;
 
 import com.czn.assistant.dto.response.LegendsListDTO;
 import com.czn.assistant.service.impl.LegendsListService;
+import com.czn.assistant.util.LegendsNameConverter;
 import com.czn.assistant.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/legendsList")
 @Slf4j
 public class LegendsListController {
 
     LegendsListService legendsListService;
+    LegendsNameConverter legendsNameConverter;
 
     @Autowired
-    public LegendsListController(LegendsListService legendsListService) {
+    public LegendsListController(LegendsListService legendsListService, LegendsNameConverter legendsNameConverter) {
         this.legendsListService = legendsListService;
+        this.legendsNameConverter = legendsNameConverter;
     }
 
     @GetMapping("/get/{name}")
@@ -51,5 +54,14 @@ public class LegendsListController {
         log.info("刷新英雄列表");
 
         return Response.success();
+    }
+
+    //根据映射文件更新英雄chineseName
+    //返回成功更新数据条数
+    @PutMapping("/updateChineseName")
+    public Response<Integer> updateChineseNameBasedOnMap() {
+        Integer i = legendsNameConverter.updateLegendsChineseNameBasedOnLegendsNameMapFile();
+
+        return Response.success(i);
     }
 }
