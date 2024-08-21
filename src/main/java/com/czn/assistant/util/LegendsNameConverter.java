@@ -66,6 +66,7 @@ public class LegendsNameConverter {
             //删除临时文件
             new File(tmpFilePath).delete();
         }
+
     }
 
     //通过映射关系文件修改数据库中英雄的中文名字

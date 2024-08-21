@@ -64,4 +64,12 @@ public class LegendsListController {
 
         return Response.success(i);
     }
+
+    //将数据库中的英雄英文与中文名写入映射文件
+    @PutMapping("/writeMapFile")
+    public Response writeMapFileBasedOnDataBase() {
+        legendsNameConverter.writeLegendsNameToFile();
+
+        return Response.success();
+    }
 }
